@@ -103,6 +103,27 @@ function GGDictionary:addLanguageFromFile( path, baseDirectory )
 	return self:addLanguage( language )
 end
 
+--- Saves a language definition table to disk.
+-- @param path The path for the file.
+-- @param language The language to be saved.
+-- @param baseDirectory The base directory for the path. Optional, defaults to system.DocumentsDirectory.
+-- @return True if successful, false otherwise.
+function GGDictionary:saveLanguageToFile( path, language, baseDirectory )
+
+	local path = system.pathForFile( path, baseDirectory or system.DocumentsDirectory )
+	local file = io.open( path, "w+" )
+	
+    if file then
+        local data = json.encode( language )
+        file:write( data )
+        io.close( file )
+        return true
+    else
+        return false
+    end
+    
+end 
+
 -- Adds a language to the dictionary.
 -- @param name The name of the string.
 -- @param language The name of the language to use. Optional, defaults to .currentLanguage.
