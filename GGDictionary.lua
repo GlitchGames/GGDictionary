@@ -69,7 +69,6 @@ function GGDictionary:loadLanguage( path, baseDirectory )
 	if not file then
 		return
 	end
-	
 	local data = json.decode( file:read( "*a" ) )
 	io.close( file )
 	
@@ -91,6 +90,27 @@ function GGDictionary:addLanguage( language )
 		self.currentLanguage = language.name
 	end
 	return self.languages[ language.name ]
+	
+end
+
+--- Adds a languages from file.
+-- @param path The path to the file.
+-- @param baseDirectory The base directory for the path. Optional, defaults to system.ResourceDirectory.
+function GGDictionary:addLanguagesFromFile( path, baseDirectory )
+	
+	local path = system.pathForFile( path, baseDirectory or system.ResourceDirectory )
+	local file = io.open( path, "r" )
+	
+	if not file then
+		return
+	end
+
+	local data = json.decode( file:read( "*a" ) ) or {}
+	io.close( file )
+	
+	for i = 1, #data, 1 do
+		self:addLanguageFromFile( data[ i ], baseDirectory )
+	end
 	
 end
 
