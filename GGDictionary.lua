@@ -46,14 +46,11 @@ local json = require( "json" )
 -- @return The new object.
 function GGDictionary:new()
     
-    local self = {}
+    local newDict = {}
     
-    setmetatable( self, GGDictionary_mt )
+    newDict.languages = {}
     
-    self.languages = {}
-    self.currentLanguage = nil
-    
-    return self
+    return setmetatable( newDict, GGDictionary_mt )
     
 end
 
@@ -161,7 +158,7 @@ end
 --- Destroys this GGDictionary object.
 function GGDictionary:destroy()
 	for k, v in pairs( self.languages ) do
-		v = nil
+		self.languages[k] = nil
 	end
 	self.languages = nil
 	self.currentLanguage = nil
