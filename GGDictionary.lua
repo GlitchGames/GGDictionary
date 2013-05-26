@@ -160,9 +160,11 @@ end
 
 --- Destroys this GGDictionary object.
 function GGDictionary:destroy()
+	
 	for k, v in pairs( self.languages ) do
-		v = nil
+	  self.languages[ k ] = nil
 	end
+
 	self.languages = nil
 	self.currentLanguage = nil
 end
